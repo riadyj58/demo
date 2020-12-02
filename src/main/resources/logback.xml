@@ -1,0 +1,113 @@
+<configuration>
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSSS} | %X{requestId} | %-5level | %logger{36} - %replace(%msg){'[\n\r]','\\n'}%n
+                <!-- %date{"yyyy-MM-dd'T'HH:mm:ss.SSSZ", GMT+7} | %X{requestId} | %-5level | %logger{36} - %msg%n -->
+            </Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+    </appender>
+
+    <!-- <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <logLevel/>
+                <loggerName/>
+                <threadName/>
+                <pattern>
+                    <pattern>
+                    {
+                        "trace_id": "%mdc{X-B3-TraceId}",
+                        "span_id": "%mdc{X-B3-SpanId}",
+                        "class": "%logger{40}",
+                        "input" : "#asJson{%mdc{input}}",
+                        "rest": "%message %exception"
+                    }
+                    </pattern>
+                </pattern>
+                <mdc>
+                    <excludeMdcKeyName>traceId</excludeMdcKeyName>
+                    <excludeMdcKeyName>spanId</excludeMdcKeyName>
+                    <excludeMdcKeyName>parentId</excludeMdcKeyName>
+                    <excludeMdcKeyName>spanExportable</excludeMdcKeyName>
+                    <excludeMdcKeyName>X-B3-TraceId</excludeMdcKeyName>
+                    <excludeMdcKeyName>X-B3-SpanId</excludeMdcKeyName>
+                    <excludeMdcKeyName>X-B3-ParentSpanId</excludeMdcKeyName>
+                    <excludeMdcKeyName>X-Span-Export</excludeMdcKeyName>
+                    <excludeMdcKeyName>input</excludeMdcKeyName>
+                </mdc>
+                <stackTrace/>
+            </providers>
+        </encoder>
+    </appender> -->
+
+    <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>GMT+7</timeZone>
+                </timestamp>
+                <loggerName />
+                <logLevel />
+                <threadName />
+                <message />
+                <stackTrace>
+                    <fieldName>stackTrace</fieldName>
+                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                        <maxLength>2048</maxLength>
+                        <shortenedClassNameLength>20</shortenedClassNameLength>
+                        <rootCauseFirst>true</rootCauseFirst>
+                    </throwableConverter>
+                </stackTrace>
+                <pattern>
+                    <pattern>
+                    {
+                        "trace_id": "%mdc{X-B3-TraceId}",
+                        "span_id": "%mdc{X-B3-SpanId}",
+                        "source_id": "%mdc{source_id}",
+                        "input" : "%mdc{input}"
+                    }
+                    </pattern>
+                </pattern>
+                <sequence />
+            </providers>
+            <!-- <jsonFactoryDecorator class="net.logstash.logback.decorate.CharacterEscapesJsonFactoryDecorator">
+                <includeStandardAsciiEscapesForJSON>false</includeStandardAsciiEscapesForJSON>
+            </jsonFactoryDecorator> -->
+        </encoder>
+    </appender>
+
+    <!-- <logger name="org.springframework.data" level="warn" />
+    <logger name="org.springframework.web" level="warn" />
+    <logger name="com.bca.mss.importDeals" level="info"/> -->
+    <logger name="com.treasury.demo" level="info"/>
+    
+    <root>
+        <level value="warn"/>
+        <appender-ref ref="jsonConsoleAppender"/>
+    </root>
+</configuration>
