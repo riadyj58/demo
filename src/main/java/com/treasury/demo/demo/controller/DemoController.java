@@ -3,12 +3,14 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.treasury.demo.demo.exception.ValidatorException;
 import com.treasury.demo.demo.model.Person;
 import com.treasury.demo.demo.model.PersonDao;
 import com.treasury.demo.demo.model.PersonDto;
 import com.treasury.demo.demo.model.PersonDtoXML;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,7 +44,7 @@ public class DemoController {
     }
 //INGET PERBEDAAN REQUESTBODY SAMA REQUEST PARAM
     @PostMapping(value = "/insertPerson")
-    public Person insertPerson(@Valid @RequestBody PersonDtoXML personDtoXML)
+    public Person insertPerson(@Valid @RequestBody PersonDtoXML personDtoXML) throws Exception
     {
 
         System.out.println(personDtoXML.getDate());
