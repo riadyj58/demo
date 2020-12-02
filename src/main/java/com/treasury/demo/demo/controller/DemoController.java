@@ -1,5 +1,8 @@
 package com.treasury.demo.demo.controller;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import com.treasury.demo.demo.model.Person;
 import com.treasury.demo.demo.model.PersonDao;
 import com.treasury.demo.demo.model.PersonDto;
@@ -39,7 +42,7 @@ public class DemoController {
     }
 //INGET PERBEDAAN REQUESTBODY SAMA REQUEST PARAM
     @PostMapping(value = "/insertPerson")
-    public Person insertPerson(@RequestBody PersonDtoXML personDtoXML)
+    public Person insertPerson(@Valid @RequestBody PersonDtoXML personDtoXML)
     {
 
         System.out.println(personDtoXML.getDate());
